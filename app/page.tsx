@@ -1,6 +1,5 @@
 "use client";
 import ProjectCard from "./components/ProjectCard";
-git--version
 const projects = [
   {
     title: "WA Audit System",
