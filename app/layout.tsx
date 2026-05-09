@@ -41,9 +41,15 @@ export default function RootLayout({
           </div>
         </nav>
         {children}
-        <footer className="w-full bg-gray-900 text-gray-500 text-center p-6 text-sm mt-auto">
-          <p>Built by Seraj — AI + Automation Specialist</p>
-          <p className="text-gray-600 mt-1">From zero to engineer, one day at a time.</p>
+        <footer className="w-full bg-gray-900 border-t border-gray-800 text-center p-8 mt-auto">
+          <p className="text-green-400 font-bold text-sm mb-3">Seraj's AI Lab</p>
+          <div className="flex justify-center gap-6 mb-4">
+            <a href="https://github.com/serajautomated" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-green-400 transition-colors text-sm">GitHub</a>
+            <a href="https://www.linkedin.com/in/seraj-habib-49a099174/" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-green-400 transition-colors text-sm">LinkedIn</a>
+            <a href="mailto:serajhabib5@gmail.com" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-green-400 transition-colors text-sm">Email</a>
+            <a href="https://www.instagram.com/fuhrersrh/" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-green-400 transition-colors text-sm">Instagram</a>
+          </div>
+          <p className="text-gray-600 text-xs mt-2">From zero to automated, one day at a time.</p>
         </footer>
       </body>
     </html>
