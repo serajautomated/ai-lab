@@ -1,24 +1,28 @@
 "use client";
 import ProjectCard from "./components/ProjectCard";
-
+git--version
 const projects = [
   {
     title: "WA Audit System",
     description: "AI-powered WhatsApp chat auditor for QA compliance. Handles 40+ audits daily with automated violation detection and scoring.",
     status: "LIVE IN PRODUCTION",
-    sno: "001"
+    sno: "001",
+    category: "live",
   },
   {
     title: "QA Feedback Classifier",
     description: "Few-shot complaint classifier with severity ratings, batch processing, and tone detection across multiple channels.",
     status: "PORTFOLIO PIECE 3",
-    sno: "002"
+    sno: "002",
+    category: "portfolio",
+
   },
   {
     title: "QA Coaching Assistant",
     description: "System prompt that generates constructive, SOP-referenced coaching notes for advisors after audit completion.",
     status: "IN PROGRESS",
-    sno: "003"
+    sno: "003",
+    category: "progress",
   }
 ];
 export default function Home() {
@@ -75,6 +79,7 @@ export default function Home() {
                 description={project.description}
                 status={project.status}
                 sno={project.sno}
+                category={project.category}
               />
             ))}
           </div>
