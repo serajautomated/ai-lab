@@ -37,6 +37,7 @@ export default function RootLayout({
             <Link href="/" className="hover:text-green-400 transition-colors">Home</Link>
             <Link href="/about" className="hover:text-green-400 transition-colors">About</Link>
             <Link href="/projects" className="hover:text-green-400 transition-colors">Projects</Link>
+            <Link href="/chat" className="hover:text-green-400 transition-colors">Let's Chat</Link>
 
           </div>
         </nav>
