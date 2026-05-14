@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const responses: { [key: string]: string } = {
     hello: "Hey there! I'm Seraj's AI Lab assistant. Ask me anything about his projects, skills, or journey.",
@@ -19,11 +19,28 @@ const responses: { [key: string]: string } = {
 
 function getResponse(input: string): string {
     const lower = input.toLowerCase().trim();
-    for (const key in responses) {
-        if (lower.includes(key)) {
-            return responses[key];
+
+    const patterns: { keywords: string[]; response: string }[] = [
+        { keywords: ["hello", "hi", "hey", "sup", "yo"], response: responses.hello },
+        { keywords: ["project", "work", "built", "build", "portfolio", "made"], response: responses.projects },
+        { keywords: ["audit", "whatsapp", "wa ", "compliance"], response: responses.audit },
+        { keywords: ["classifier", "feedback", "complaint", "classify"], response: responses.classifier },
+        { keywords: ["coaching", "coach", "advisor feedback", "notes"], response: responses.coaching },
+        { keywords: ["skill", "tools", "tech", "stack", "know", "can you", "capable"], response: responses.skills },
+        { keywords: ["background", "experience", "career", "work history", "resume", "cv"], response: responses.background },
+        { keywords: ["journey", "roadmap", "learning", "goal", "plan", "path"], response: responses.journey },
+        { keywords: ["ditto", "insurance", "company", "employer", "job"], response: responses.ditto },
+        { keywords: ["website", "site", "built this", "next.js", "nextjs", "portfolio site"], response: responses.website },
+        { keywords: ["contact", "reach", "email", "linkedin", "connect", "hire", "github"], response: responses.contact },
+        { keywords: ["help", "what can", "options", "menu", "commands"], response: responses.help },
+    ];
+
+    for (const pattern of patterns) {
+        if (pattern.keywords.some((kw) => new RegExp("\\b" + kw + "\\b", "i").test(lower))) {
+            return pattern.response;
         }
     }
+
     return "I'm not sure about that one. Try asking about projects, skills, journey, background, or website. Or type 'help' to see everything I can answer!";
 }
 
@@ -32,13 +49,23 @@ export default function Chat() {
         { text: "Hey! I'm the AI Lab assistant. Ask me anything about Seraj's work, projects, or journey. Type 'help' to see what I can answer!", sender: "bot" },
     ]);
     const [input, setInput] = useState("");
+    const [isTyping, setIsTyping] = useState(false);
+    const bottomRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
 
     function handleSend() {
         if (!input.trim()) return;
-        const userMsg = { text: input, sender: "user" as const };
-        const botMsg = { text: getResponse(input), sender: "bot" as const };
-        setMessages((prev) => [...prev, userMsg, botMsg]);
+        const userText = input;
         setInput("");
+        setMessages((prev) => [...prev, { text: userText, sender: "user" as const }]);
+        setIsTyping(true);
+        setTimeout(() => {
+            setMessages((prev) => [...prev, { text: getResponse(userText), sender: "bot" as const }]);
+            setIsTyping(false);
+        }, 800);
     }
 
     return (
@@ -55,8 +82,16 @@ export default function Chat() {
                             <div className={msg.sender === "user" ? "bg-green-600 text-white px-4 py-3 rounded-2xl rounded-br-sm max-w-sm" : "bg-gray-800 text-zinc-300 px-4 py-3 rounded-2xl rounded-bl-sm max-w-sm whitespace-pre-line"}>
                                 {msg.text}
                             </div>
+                            <div ref={bottomRef}></div>
                         </div>
                     ))}
+                    {isTyping && (
+                        <div className="flex justify-start">
+                            <div className="bg-gray-800 text-zinc-400 px-4 py-3 rounded-2xl rounded-bl-sm">
+                                <span className="animate-pulse">typing...</span>
+                            </div>
+                        </div>
+                    )}
                 </div>
                 <div className="flex gap-3 pb-4">
                     <input
